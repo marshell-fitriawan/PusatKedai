@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { ChevronLeft, Store } from "lucide-react";
+import { Store } from "lucide-react";
 import { MasukForm } from "@/components/pos/masuk-form";
+import { AuthShell } from "@/components/ui/auth-shell";
 
 export const metadata = {
   title: "Mulai Sesi — Kasir",
@@ -18,34 +18,24 @@ export const metadata = {
  */
 export default function MasukPage() {
   return (
-    <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center px-4 py-8">
-      <Link
-        href="/"
-        className="tap-target -ml-2 mb-4 inline-flex w-fit items-center gap-1 px-2 text-sm font-semibold underline underline-offset-4 hover:bg-primary-light"
-      >
-        <ChevronLeft className="size-4" aria-hidden />
-        Kembali
-      </Link>
-
-      <div className="mb-6 flex items-center gap-3">
-        <span className="flex size-12 items-center justify-center border-2 border-ink bg-primary text-ink shadow-brutal">
-          <Store className="size-6" aria-hidden />
-        </span>
-        <div>
-          <h1 className="text-xl font-bold">Mulai Sesi Kasir</h1>
-          <p className="text-sm text-text-secondary">
-            {process.env.NEXT_PUBLIC_CLIENT_NAME ?? "Sistem Multi-Kedai"}
-          </p>
-        </div>
-      </div>
-
+    <AuthShell
+      title="Mulai Sesi Kasir"
+      clientName={process.env.NEXT_PUBLIC_CLIENT_NAME ?? "Sistem Multi-Kedai"}
+      icon={Store}
+      backHref="/"
+      headline="Mulai kerja di kedai Anda."
+      tagline="Pindai kartu QR pribadi, lalu shift Anda terbuka sampai Anda menutup toko. Sesi mengikat semua transaksi ke nama Anda."
+      points={[
+        "Buka shift cukup dengan memindai kartu QR",
+        "Kedai dan nama Anda terisi otomatis dari kartu itu",
+        "Transaksi tetap tersimpan walau internet mati",
+        "Tutup toko dengan menghitung kas fisik",
+      ]}
+      hint="Pindai kartu QR pribadi Anda. Kedai ditentukan otomatis dari kartu itu."
+    >
       <div className="border-2 border-ink bg-surface p-6 shadow-brutal">
         <MasukForm />
       </div>
-
-      <p className="mt-4 text-center text-xs text-text-secondary">
-        Pindai kartu QR pribadi Anda. Kedai ditentukan otomatis dari kartu itu.
-      </p>
-    </main>
+    </AuthShell>
   );
 }

@@ -139,6 +139,36 @@ Tiga aturan yang tidak boleh dilanggar:
    dirender dari satu sumber — perbaikan tampilan tidak bisa melenceng antara
    modal dan panel.
 
+### Halaman masuk dan halaman pertama: satu breakpoint
+
+Tiga halaman memakai kerangka yang sama, `components/ui/auth-shell.tsx`:
+halaman pertama (`/`), `/admin/login`, dan `/pos/masuk`.
+
+Keduanya memotong layar di **`lg` (1024px)**, sama seperti POS:
+
+| | < 1024px (HP) | >= 1024px (laptop, desktop) |
+|---|---|---|
+| Kolom kiri | disembunyikan | panel kuning: penjelasan sistem |
+| Kolom kanan | `max-w-sm`–`max-w-md`, di tengah | mengisi setengah layar, rata atas |
+| Kartu pilihan | menumpuk | 2 kolom (`sm:grid-cols-2`) |
+
+Dua aturan yang tidak boleh dilanggar:
+
+1. **Kolom kiri menjelaskan, bukan mengulang nama.** Kalau nama produk
+   ditulis lagi di kolom kanan, di layar lebar teks itu muncul dua kali
+   dalam satu layar. Penjelasan yang tampil di kiri: masalah yang
+   diselesaikan, lalu 3–4 poin nyata tentang sistem itu.
+
+2. **Kolom kiri `hidden`, bukan disembunyikan dengan `max-h`.** Di HP tidak
+   ada ruang untuk dua kolom, dan penjelasan tidak boleh mendorong form ke
+   bawah layar. Form adalah tugas utama, jadi form yang menang.
+
+Tautan di halaman pertama mengarah ke halaman **masuk**
+(`/pos/masuk`, `/admin/login`), bukan ke halaman tujuan
+(`/pos/kasir`, `/admin/dashboard`). Halaman tujuan sudah dilindungi
+middleware dan akan melempar balik ke halaman masuk, jadi menautkan
+langsung ke halaman masuk menghemat satu perpindahan.
+
 ## Radius & Shadow
 - **Border radius: 0.** Exception: badge/chip boleh `2px`. Tidak ada `rounded-md/lg/xl/full` di card, tombol, input, modal, sheet.
 - **Shadow: hanya hard offset tanpa blur.** Definisi token:
