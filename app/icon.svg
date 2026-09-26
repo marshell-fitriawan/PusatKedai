@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!--
+    Ikon Sistem Multi-Kedai: etalase kedai, gaya neo-brutalism.
+    Warna = token `primary` (#FFD400) dan `ink` (#0A0A0A) dari
+    docs/design_1.md. Bentuk siku (tanpa radius) konsisten dengan UI.
+    Bentuk sengaja dijaga di dalam safe zone maskable (lingkaran 80% tengah)
+    supaya tidak terpotong saat Android memberi mask bulat/squircle.
+  -->
+  <rect width="512" height="512" fill="#FFD400"/>
+  <g fill="#0A0A0A">
+    <!-- tenda/awning -->
+    <path d="M136 148H376L398 204H114L136 148Z"/>
+    <!-- badan bangunan -->
+    <rect x="146" y="220" width="220" height="148"/>
+  </g>
+  <!-- pintu (dipotong dari badan) -->
+  <rect x="224" y="288" width="64" height="80" fill="#FFD400"/>
+  <!-- garis pintu -->
+  <rect x="224" y="288" width="64" height="10" fill="#0A0A0A"/>
+</svg>

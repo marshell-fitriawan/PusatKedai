@@ -1,0 +1,243 @@
+/*
+ * `source(none)` mematikan deteksi sumber otomatis Tailwind, lalu kita
+ * daftarkan sendiri direktorinya.
+ *
+ * Kenapa tidak biarkan saja? Tailwind v4 memindai SELURUH repo yang tidak
+ * di-gitignore — termasuk `docs/*.md`, `AGENTS.md`, dan `CLAUDE.md`. Dokumen
+ * itu justru berisi daftar class yang DILARANG (`shadow-lg`, `blur`,
+ * `drop-shadow`, `ring`, `filter`), dan Tailwind membacanya sebagai permintaan
+ * class. Akibatnya CSS production ikut memuat utility yang tidak pernah dipakai
+ * dan menarik seluruh pipeline compositor-nya.
+ *
+ * Daftar di bawah ini harus mencakup semua tempat yang bisa memuat className.
+ * Kalau menambah direktori baru, tambahkan juga di sini — kalau lupa, styling
+ * hilang tanpa error build.
+ */
+@import "tailwindcss" source(none);
+
+@source "../app";
+@source "../components";
+@source "../lib";
+@source "../scripts";
+@source "../public";
+
+/*
+ * Design token — sumber kebenaran: docs/design_1.md
+ *
+ * GAYA: Neo-Brutalism, tema Putih/Kuning.
+ * Tiga aturan yang tidak boleh dilanggar:
+ *   1. Radius 0 di semua elemen (kecuali badge/chip 2px).
+ *   2. Shadow hanya hard offset tanpa blur (2/4/6px ke kanan-bawah, warna ink).
+ *   3. Tanpa gradient, tanpa transparansi pada warna brand.
+ *
+ * Tailwind v4 memakai konfigurasi CSS-first (@theme), bukan tailwind.config.ts.
+ * Semua token di bawah otomatis jadi utility class:
+ *   --color-ink       -> bg-ink, border-ink, text-ink
+ *   --color-primary   -> bg-primary, border-primary, text-primary
+ *   --shadow-brutal   -> shadow-brutal
+ *
+ * ATURAN: jangan tulis hex code langsung di komponen. Kalau butuh warna baru,
+ * tambahkan dulu ke docs/design_1.md, baru ke sini.
+ *
+ * TABRAKAN NAMA: `text-primary` = warna brand kuning, BUKAN warna teks utama.
+ * Warna teks utama adalah `text-ink`.
+ */
+
+@theme {
+  /* -- Brand -------------------------------------------------------- */
+  --color-primary: #ffd400; /* kuning mencolok - tombol utama, elemen aktif */
+  --color-primary-dark: #e0b800; /* hover/pressed tombol utama (gelap, bukan transparan) */
+  --color-primary-light: #fff4b8; /* background lembut badge/section aktif */
+
+  /* -- Aksen -------------------------------------------------------- */
+  --color-accent-blue: #2b50f5; /* pemisah dari kuning, link, pilihan aktif */
+  --color-accent-blue-light: #dde3ff; /* background aksen biru lembut */
+
+  /* -- Netral ------------------------------------------------------- */
+  --color-background: #ffffff; /* latar halaman (putih polos) */
+  --color-surface: #ffffff; /* card, modal, form container */
+  --color-surface-alt: #f2f2f2; /* baris tabel, area sekunder, header tabel */
+  --color-ink: #0a0a0a; /* SEMUA border brutalism + warna teks utama */
+  --color-text-secondary: #4a4a4a; /* label, caption */
+  --color-text-disabled: #8c8c8c; /* placeholder, teks nonaktif */
+  /* TIDAK ADA token border terpisah. Semua garis brutalism memakai `ink`
+     (`border-ink` / `divide-ink`). Token `--color-border` sengaja dihapus —
+     tidak ada lagi `border-border` di codebase dan tiap token yang tak
+     terpakai tetap ikut terkirim ke browser. */
+
+  /* -- Semantik (status) -------------------------------------------- */
+  /* Isi solid + border 2px ink. Teks di atasnya: ink, kecuali info (putih). */
+  --color-success: #3ddc84; /* transaksi berhasil, approval disetujui */
+  --color-warning: #ffd400; /* stok menipis, shift belum final */
+  --color-danger: #ff4b3e; /* gagal, selisih kas, stok habis/minus */
+  --color-info: #2b50f5; /* informasi netral (teks putih) */
+
+  /* Versi GELAP untuk teks langsung di atas putih. Warna solid di atas tidak
+     boleh dipakai sebagai warna teks -- `success` di putih hanya sekitar
+     1.6:1. Selalu pakai `text-*-text` kalau teksnya di atas permukaan putih. */
+  --color-success-text: #0f6b3c;
+  --color-warning-text: #6b4e00;
+  --color-danger-text: #b3261e;
+  --color-info-text: #1e3ad1;
+
+  /* -- Tipografi ----------------------------------------------------- */
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  /* Font display untuk heading brutalism (uppercase, bold, tracking rapat). */
+  --font-display: var(--font-space-grotesk), var(--font-plus-jakarta), sans-serif;
+
+  --text-xs: 0.75rem; /* caption, timestamp */
+  --text-sm: 0.875rem; /* body sekunder, teks tabel */
+  --text-base: 1rem; /* body utama */
+  --text-lg: 1.125rem; /* sub-heading, harga di POS */
+  --text-xl: 1.375rem; /* heading section */
+  --text-2xl: 1.75rem; /* heading halaman */
+  --text-3xl: 2.25rem; /* angka besar: total transaksi, omzet */
+
+  /* -- Radius: 0, brutalism tidak membulatkan apa pun --------------- */
+  /* Override token Tailwind supaya `rounded-md` yang terlupa tetap siku. */
+  --radius-xs: 0;
+  --radius-sm: 2px; /* satu-satunya pengecualian: badge/chip */
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-4xl: 0;
+}
+
+/*
+ * -- Shadow: hard offset tanpa blur -----------------------------------
+ *
+ * Sengaja ditulis sebagai @utility dengan `box-shadow` biasa, bukan sebagai
+ * token `--shadow-*` di @theme.
+ *
+ * Alasannya ukuran. Utility `shadow-*` milik Tailwind v4 disusun dari
+ * compositor internal: ring + inset-ring + inset-shadow + drop-shadow +
+ * brightness/contrast/grayscale/hue-rotate/invert/saturate/sepia/blur.
+ * Begitu ada satu `shadow-*` dari namespace theme, seluruh properti itu
+ * didaftarkan di CSS.
+ *
+ * Brutalism tidak boleh memakai satu pun filter tersebut, jadi menulis
+ * box-shadow langsung adalah bentuk yang paling kecil.
+ *
+ * CATATAN PENTING -- jangan menjanjikan blok `@property` ini hilang total.
+ * Secara terukur blok `@property` MASIH terkirim (2,5 KB mentah, hanya
+ * 0,30 KB gzip / 0,27 KB brotli), karena extractor Tailwind memindai
+ * seluruh isi file, bukan cuma attribute className:
+ *   - `filter`  -> dari `Array.prototype.filter` (dipakai di mana-mana)
+ *   - `shadow`  -> dari kata "shadow" di komentar prosa
+ * Menghapus blok itu berarti tidak boleh memakai `.filter()` dan tidak boleh
+ * menyebut "shadow" di komentar. Tidak sepadan dengan 0,3 KB.
+ * Yang dijaga di sini: jangan menambah pemakaian utility filter/shadow baru.
+ */
+@utility shadow-brutal-sm {
+  box-shadow: 2px 2px 0 0 var(--color-ink);
+}
+
+@utility shadow-brutal {
+  box-shadow: 4px 4px 0 0 var(--color-ink);
+}
+
+@utility shadow-brutal-lg {
+  box-shadow: 6px 6px 0 0 var(--color-ink);
+}
+
+/*
+ * Spacing memakai skala default Tailwind (kelipatan 4px), tapi nilai yang
+ * BOLEH dipakai dibatasi sesuai docs/design_1.md:
+ *   4px=1  8px=2  12px=3  16px=4  24px=6  32px=8  48px=12  64px=16
+ * Jangan pakai p-5, gap-7, m-9, dst.
+ */
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Tap target & scroll yang nyaman untuk POS di HP */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Semua angka (harga, stok, laporan) sejajar rapi di tabel/daftar */
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Heading brutalism: uppercase + rapat. Global supaya konsisten tanpa
+     harus mengetik class ini di tiap halaman. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  /* Focus ring brutalism: outline tebal warna brand, menempel ke border
+     (offset 0) — bukan ring biru default browser yang membulat. */
+  :focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 0;
+  }
+}
+
+@utility tap-target {
+  /* Minimum tap target POS: 44x44px (docs/design_1.md) */
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/*
+ * Efek tekan brutalism: elemen yang punya `shadow-brutal` terdorong 2px ke
+ * kanan-bawah dan shadow-nya hilang saat aktif. Tanpa ini, kotak cuma
+ * terlihat datar. Pakai di tombol, nav item, dan kartu yang bisa diklik.
+ *
+ * State `:disabled` ikut diatur di sini, bukan lewat `disabled:shadow-none`.
+ * Alasan: `shadow-none` milik namespace shadow Tailwind, dan memakainya
+ * memaksa browser menerima blok `@property` compositor (~2,5 KB CSS) untuk
+ * blur/grayscale/drop-shadow yang memang dilarang di brutalism.
+ */
+@utility press-brutal {
+  transition:
+    transform 100ms steps(2, end),
+    box-shadow 100ms steps(2, end);
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: none;
+  }
+
+  /* Tombol nonaktif tidak boleh terlihat bisa ditekan. */
+  &:disabled {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/*
+ * Print: hanya area bertanda `.print-area` yang ikut tercetak. Dipakai
+ * halaman kartu QR karyawan (M3-2) supaya sidebar dan header admin tidak
+ * ikut tercetak di atas kartu.
+ */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+  }
+
+  /* Border/shadow cetak sebagai garis solid, bukan blok bayangan abu. */
+  .print-area * {
+    box-shadow: none !important;
+    border-color: #0a0a0a !important;
+  }
+}
