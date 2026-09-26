@@ -42,6 +42,16 @@ npm run icons          # regenerate PWA icons from app/icon.svg
 - Schema uses `text + CHECK` constraints, not Postgres ENUMs; `gen:types` turns those CHECK lists into string unions.
 - Dev admin logins (both via `/admin/login`): owner `owner@kedaidev.test` / `dev-owner-2026`; admin pusat `admin@kedaidev.test` / `dev-admin-2026`. Seed creates both (`scripts/seed.mjs` + `supabase/seed.sql`).
 
+## Git
+
+- **Commit hanya kalau diminta.** Setelah selesai satu task, laporkan dan tunggu instruksi.
+- **Jangan pernah menulis trailer `Co-Authored-By:` / `Signed-off-by:`**, dan jangan menambahkan footer atribusi AI (`Generated with …`, nama tool, atau email bot). Author harus tetap identitas developer.
+- Satu fitur = satu commit. Jangan menggabungkan fitur berbeda dalam satu commit, dan jangan menyertakan file tak terkait karena "sudah terstaging" (kecuali lockfile atau hasil `gen:types` yang memang menyertainya).
+- **Jangan merekonstruksi riwayat.** Kalau history sudah hilang, jadikan state saat ini satu commit baseline yang jujur — jangan memecah file jadi commit per fitur fiktif. Riwayat palsu lebih berbahaya daripada tidak ada.
+- Format pesan: Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`), subjek < 72 karakter, body menjelaskan *mengapa* kalau tidak jelas dari diff.
+- Simpan rahasia: `.gitignore` sudah menolak `.env*`; `SUPABASE_SERVICE_ROLE_KEY` tidak boleh masuk commit dalam bentuk apa pun. `.env.example` sengaja ikut (placeholder) — jangan pernah diisi nilai asli.
+- Migrasi yang sudah dipakai tidak boleh diedit, termasuk di dalam commit mana pun — buat file baru.
+
 ## Non-negotiable data invariants
 
 - `kedai_stock.quantity` is **never updated bare** — every change must insert a `stock_movements` row in the same DB transaction (ledger-only audit trail).
