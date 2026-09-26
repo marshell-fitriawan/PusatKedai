@@ -17,6 +17,7 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4 · Supabase (Po
 - `docs/panduan/README.md` → then `docs/panduan/00`→`06` before touching code. These explain *why* existing code is built the way it is.
 - Design source of truth is `docs/Database.md` and `docs/design_1.md` (they win over `docs/panduan/` on conflict). `docs/Tasks.md` lists what's next.
 - Docs and code comments are written in **Indonesian** — keep new ones that way.
+- Konvensi kerja project (struktur dokumen, dokumentasi per fitur, manual book, runbook deploy, aturan git) ada di skill global `project-workflow` — `~/.agents/skills/project-workflow/SKILL.md`. Baca itu dulu sebelum membuat dokumen atau menutup milestone.
 
 ## Commands
 
