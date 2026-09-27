@@ -123,7 +123,8 @@ sebelum toko dibuka, sistem akan menolak dan mengingatkan.
 5. Di jendela keranjang:
    - Atur jumlah dengan tombol **−** dan **+**, atau hapus item dengan ikon
      tong sampah.
-   - Pilih **Tunai** atau **QRIS** (lihat [4.3](#43-pembayaran-qris)).
+   - Pilih **Tunai** (lihat [4.3](#43-pembayaran-nontunai) kalau instance
+     Anda punya nontunai).
    - Tekan **Bayar Tunai RM …**.
 6. Layar **Transaksi Berhasil** muncul beserta nomor transaksi. Tekan
    **Transaksi Baru** untuk melayani pelanggan berikutnya.
@@ -137,23 +138,19 @@ Jangan menolak pelanggan hanya karena angka stok.
 transaksi aman tersimpan di HP dan sedang menunggu dikirim ke pusat. Nomor
 resminya muncul otomatis setelah terkirim. Tidak perlu mengulang transaksi.
 
-### 4.3 Pembayaran QRIS
+### 4.3 Pembayaran nontunai
 
-1. Setelah keranjang siap, pilih **QRIS** (bukan Tunai).
-2. Tekan **Bayar QRIS RM …**.
-3. Minta pelanggan memindai QR yang muncul dengan aplikasi apa pun yang
-   mendukung QRIS (Gopay, OVO, ShopeePay, atau m-banking).
-4. Layar menampilkan **"Menunggu pembayaran…"**. Tunggu sampai muncul
-   **Transaksi Berhasil**.
+> **Bagian ini hanya relevan kalau instance Anda punya pembayaran nontunai.**
+> Di layar kasir, kalau hanya ada tombol **Tunai**, berarti instance Anda
+> belum punya nontunai. Saat itu pembayaran nontunai tetap dilakukan seperti
+> biasanya di luar sistem, dan yang perlu dicatat di sistem hanya penjualan
+> tunainya.
 
-Catatan penting:
-
-- **QRIS butuh internet.** Kalau tidak ada koneksi, sistem menolak dan meminta
-  pakai Tunai.
-- **Jangan tekan Batal setelah pelanggan mulai memindai.** Kalau pelanggan
-  sudah membayar, transaksinya tetap tercatat walau layar ditutup.
-- Kalau QR kedaluwarsa, minta pelanggan memindai ulang dengan menekan bayar
-  QRIS lagi.
+Kalau instance Anda punya nontunai, kasir bisa memilihnya di jendela
+keranjang seperti memilih Tunai. Pembayaran nontunai **butuh internet** — kalau
+tidak ada koneksi, sistem menolak dan meminta pakai Tunai. Jangan tekan Batal
+setelah pelanggan mulai membayar, karena kalau sudah lunas transaksinya tetap
+tercatat walau layar ditutup.
 
 ### 4.4 Melihat riwayat & mengajukan pembatalan (Riwayat)
 
@@ -497,7 +494,7 @@ Kelola akun karyawan kedai (tanpa email/password — mereka masuk lewat kartu QR
 
 **Internet mati, apakah tetap bisa jualan?**
 Bisa, untuk pembayaran **Tunai**. Transaksinya disimpan di HP dan dikirim
-otomatis saat online. **QRIS tidak bisa** tanpa internet.
+otomatis saat online. Pembayaran nontunai tidak bisa tanpa internet.
 
 **Kenapa stok tertulis minus?**
 Karena perangkat kedai memakai data yang sedikit basi (mis. penjualan dari HP
@@ -528,7 +525,7 @@ boleh diganti/dihapus.
 
 | Tindakan | Karyawan (Kasir) | Pemilik / Admin Pusat |
 |---|---|---|
-| Jual barang (tunai/QRIS) | ✅ | — |
+| Jual barang (tunai) | Ya | — |
 | Buka & tutup toko | ✅ | — |
 | Catat waste & hitung fisik | ✅ | — |
 | Ajukan pindah stok | ✅ | — |

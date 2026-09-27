@@ -31,9 +31,10 @@ Menunda membuat selisih kas dan selisih stok terlihat seperti kehilangan.
 ### Sepanjang hari — melayani pelanggan
 
 - [ ] **5. Jual seperti biasa** di menu **Kasir**: cari/ketuk produk → **Lihat
-      Keranjang** → pilih **Tunai** atau **QRIS** → **Bayar**.
-- [ ] **6. Untuk QRIS**, tunggu sampai muncul **Transaksi Berhasil** sebelum
-      melepas pelanggan. Jangan tekan Batal setelah pelanggan memindai.
+      Keranjang** → pilih metode pembayaran yang tersedia → **Bayar**.
+- [ ] **6. Kalau memakai pembayaran nontunai**, tunggu sampai muncul
+      **Transaksi Berhasil** sebelum melepas pelanggan. Jangan tekan Batal
+      setelah pelanggan membayar.
 - [ ] **7. Catat barang rusak/tumpah saat kejadian.** Menu **Shift → Stok Hilang
       (Waste)**: pilih produk, isi jumlah dan alasan, tekan **Catat Waste**.
 - [ ] **8. Salah input?** Ajukan pembatalan lewat menu **Riwayat** → pilih
@@ -127,6 +128,6 @@ Menunda membuat selisih kas dan selisih stok terlihat seperti kehilangan.
 | Waktu | Karyawan Kedai | Pemilik / Admin Pusat |
 |---|---|---|
 | **Pagi** | Masuk QR → cek antrian → hitung **Kas awal** → **Buka Toko** | Dashboard → **Perlu Perhatian** → cek stok kritis |
-| **Siang** | Jual (Tunai/QRIS) → catat waste → ajukan pembatalan/mutasi bila perlu | Setujui mutasi & pembatalan → catat pengeluaran → produksi |
+| **Siang** | Jual (tunai) → catat waste → ajukan pembatalan/mutasi bila perlu | Setujui mutasi & pembatalan → catat pengeluaran → produksi |
 | **Tutup** | Hitung fisik stok → **Tutup Toko** → pastikan antrian terkirim | Selesaikan **Setoran** → baca **Ringkasan Harian** → cek **Buka Tutup** |
 | **Malam** | Keluar dari aplikasi | Pastikan **Kas belum dibereskan** & antrian kosong |
