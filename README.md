@@ -35,6 +35,7 @@ Status pengerjaan ada di [`docs/Milestone.md`](docs/Milestone.md).
 | `docs/Milestone.md` | Roadmap level milestone |
 | `docs/Tasks.md` | Task granular: dependensi, estimasi, output, Definition of Done |
 | `docs/provisioning.md` | Runbook menyiapkan instance klien baru (Supabase + Vercel + serah terima) |
+| `docs/demo-klien.md` | Panduan memperagakan sistem ke calon klien, dari login sampai uji coba |
 | `docs/panduan/` | **Panduan developer** — cara kerja kode yang sudah jadi, ditulis untuk yang baru masuk |
 | `docs/manual/` | **Manual book** — panduan pemakaian untuk pemilik dan karyawan kedai, bahasa sehari-hari |
 
