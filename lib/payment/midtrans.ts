@@ -12,10 +12,16 @@ import { createHash } from "node:crypto";
  *     diputar di memori server. QR tetap dihasilkan, dan pembayaran "lunas"
  *     otomatis ~15 detik setelah charge tanpa harus pindai beneran.
  *
- *   Mode MOCK dipakai untuk demo & uji alur end-to-end sampai akun Midtrans
- *   klien tersedia. Konfigurasi asli (MIDTRANS_SERVER_KEY) tinggal diisi di
+ *   Mode MOCK dipakai untuk uji alur end-to-end (lapis server dan
+ *   supabase/tests/qris.sql) sampai akun Midtrans klien tersedia.
+ *   Konfigurasi asli (MIDTRANS_SERVER_KEY) tinggal diisi di
  *   .env.local dan semua bagian ini beralih ke API sungguhan -- tidak ada
  *   path kode yang menebak-nebak lagi.
+ *
+ *   PENTING: mode mock TIDAK bisa dipakai lewat layar kasir. `MIDTRANS_AKTIF`
+ *   ikut menentukan apa tombol QRIS dirender atau tidak, jadi key kosong
+ *   berarti tombolnya disembunyikan dan mock hanya bisa dipanggil langsung
+ *   (API/uji). Demo yang tidak memakai QRIS tidak perlu key sama sekali.
  *
  *   PENGAMAN PRODUCTION: kalau NODE_ENV=production dan MIDTRANS_SERVER_KEY
  *   kosong, chargeQris/statusQris melempar error dan verifikasi webhook

@@ -2,6 +2,8 @@
 
 Cara pembayaran QRIS bekerja end-to-end: dari kasir memilih "Bayar QRIS", sampai transaksi tercatat dan muncul di laporan. Baca dulu [06 Kasir & Transaksi](06-kasir-dan-transaksi.md) soal pola transaksi, dan [02 Database](02-database.md) soal penomoran shift, karena QRIS memakai keduanya.
 
+> **QRIS bersifat opsional dan disembunyikan kalau tidak dipakai.** Server menghitung `MIDTRANS_AKTIF` dari `MIDTRANS_SERVER_KEY`; nilainya diteruskan ke layar kasir sebagai `qrisAktif`. Kalau key kosong, tombol **Bayar QRIS** tidak dirender sama sekali dan grid produk jadi satu kolom — kasir hanya melihat tunai. Ini yang dipakai demo klien: data demo 100% tunai dan tidak butuh key Midtrans. Lihat `docs/demo-klien.md`.
+
 ---
 
 ## 1. Alur singkat
@@ -68,11 +70,13 @@ UI di `components/pos/kasir-screen.tsx` memindai ulang tiap ±2,5 dtk sambil QR 
 
 ## 8. Mode MOCK (kunci server kosong)
 
-Belum punya akun Midtrans berbayar → `MIDTRANS_SERVER_KEY` kosong → **mode mock** aktif: semua diputar di memori server, QR tetap dirender, dan pembayaran "lunas" otomatis ±15 dtk setelah charge tanpa pindai beneran. Cocok untuk demo dan uji alur end-to-end.
+Belum punya akun Midtrans berbayar → `MIDTRANS_SERVER_KEY` kosong → **mode mock** aktif: semua diputar di memori server, QR tetap dirender, dan pembayaran "lunas" otomatis ±15 dtk setelah charge tanpa pindai beneran. Cocok untuk uji alur end-to-end di lapis server.
+
+**Mock tidak bisa dipakai lewat layar kasir.** `MIDTRANS_AKTIF` (yang dihitung dari `MIDTRANS_SERVER_KEY` terisi atau tidak) ikut menentukan apakah tombol QRIS dirender, jadi key kosong berarti tombolnya disembunyikan di POS. Mode mock hanya bisa dipanggil langsung — lewat route API atau `supabase/tests/qris.sql`. Demo yang tidak memakai QRIS tidak perlu key sama sekali.
 
 - `Mock.server key` dipakai verifikasi webhook uji: `SB-Mid-server-MOCK-0000000000000000` (lihat `MOCK_SERVER_KEY` di `lib/payment/midtrans.ts`).
-- State mock di memori satu proses server — cukup untuk kasir (satu perangkat), TIDAK aman lintas restart.
-- Begitu key asli diisi di `.env.local`, semua bagian beralih ke API sungguhan tanpa perubahan kode.
+- State mock di memori satu proses server — cukup untuk satu perangkat, TIDAK aman lintas restart.
+- Begitu key asli diisi di `.env.local`, semua bagian beralih ke API sungguhan tanpa perubahan kode, dan tombol QRIS otomatis muncul lagi.
 
 ### Env yang dipakai
 
