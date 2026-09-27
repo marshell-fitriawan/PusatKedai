@@ -113,6 +113,8 @@ Uji manual:
    ```
 5. Ulangi approve dengan stok asal dibuat kekurangan → approve harus ditolak dengan pesan "Stok kedai asal tidak mencukupi".
 
+> Instance demo sudah punya satu mutasi **menunggu** dari seed: 3 Matcha dari Melati ke Kenanga, diajukan Rina dengan alasan "Matcha habis di Kenanga, minta 3 cup". Kalau baris pending sudah muncul di `/admin/mutasi` sebelum kamu mengajukan apa pun, itu baris tersebut — bukan pengajuan barumu. Baris pengajuan POSMU tidak punya id tetap, jadi bedakan dari isi kolomnya.
+
 ## Kalau Error
 
 | Gejala | Penyebab | Solusi |

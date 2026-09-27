@@ -100,6 +100,13 @@ Menunda membuat selisih kas dan selisih stok terlihat seperti kehilangan.
       selisih** (Terbuka / Sudah dijelaskan / Dihitung sebagai rugi), tulis
       **Catatan keputusan**, tekan **Simpan Status**. Ulangi sampai daftar
       **Kas belum dibereskan** di Perlu Perhatian kosong.
+
+      > Catatan untuk instance demo: daftar itu **tidak akan kosong dengan
+      > sendirinya**. Seed menyisakan satu sesi Melati dengan selisih kas
+      > `-15.000` berstatus **Terbuka** dan satu sesi Melati 4 hari lalu dengan
+      > 3 transaksi belum terkirim. Dua item itu memang disiapkan untuk
+      > didemokan, jadi selesaikan saat demo.
+
 - [ ] **10. Baca Ringkasan Harian.** Menu **Laporan → Ringkasan Harian**: cek
       omzet, jumlah **Dibatalkan**, dan **Menunggu keputusan** hari ini. Periksa
       **Rasio pembatalan per karyawan** — rasio kuning/merah perlu ditanyakan.

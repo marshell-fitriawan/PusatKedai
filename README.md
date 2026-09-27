@@ -16,7 +16,7 @@ Satu deployment = satu bisnis klien (dengan banyak kedai di dalamnya). Bukan Saa
 
 | Modul | Isi |
 |---|---|
-| **Kasir (POS)** | Grid produk di HP, keranjang, pembayaran tunai dan QRIS, riwayat transaksi |
+| **Kasir (POS)** | Grid produk di HP, keranjang, pembayaran tunai, riwayat transaksi. QRIS (Midtrans) opsional: tombolnya baru muncul kalau `MIDTRANS_SERVER_KEY` terisi |
 | **Offline-first** | Antrean transaksi di IndexedDB, kirim otomatis saat online, badge "belum sync" |
 | **Karyawan & shift** | Login lewat QR pribadi, absensi, buka/tutup toko, rekonsiliasi kas |
 | **Stok** | Stok per kedai, ledger `stock_movements`, mutasi antar kedai dengan approval |
@@ -116,7 +116,6 @@ npm run seed                                    # reset + isi data dev (TRUNCATE
 npm run seed:minggu                             # idem, tapi pakai supabase/seed-minggu.sql
 npm run gen:types                               # regenerate lib/database.types.ts dari skema
 npm run db -- -e "select count(*) from kedai"   # query lepas
-
 # Uji database — satu file satu kali, semua transaksional dengan rollback
 npm run db -- supabase/tests/schema-check.sql   # cek drift skema
 npm run db -- supabase/tests/constraints.sql
@@ -139,7 +138,11 @@ Jalankan `npm run gen:types` setiap kali ada migration baru — tipe TypeScript 
 
 `npm run seed` menghapus seluruh data operasional. Ada pengaman: menolak jalan kalau tabel `transactions` sudah berisi data, kecuali dipaksa `-- --force`.
 
+Isi `supabase/seed.sql`: 2 kedai (Melati, Kenanga) + Gudang Pusat, 10 produk, 5 bahan baku, 3 karyawan, dan 14 hari transaksi **tunai** (136 transaksi) plus data yang sengaja menunggu tindakan — satu selisih kas, satu antrean belum terkirim, satu pengajuan void, satu mutasi. Jadi dashboard, laporan, dan halaman Perlu Perhatian langsung berisi tanpa setup manual, dan QRIS tidak perlu disentuh sama sekali. `supabase/seed-minggu.sql` (`npm run seed:minggu`) adalah dataset alternatif yang berbeda — jangan campur keduanya dalam satu DB dev.
+
 Akun admin dev (masuk lewat `/admin/login`): owner `owner@kedaidev.test` / `dev-owner-2026`; admin pusat `admin@kedaidev.test` / `dev-admin-2026`.
+
+Kartu kasir dev (masuk lewat `/pos/masuk`, kolom **Kode kartu**): Rina `DEV-QR-RINA-0001` (kasir Melati), Budi `DEV-QR-BUDI-0002` (kepala Melati), Sari `DEV-QR-SARI-0003` (kasir Kenanga). Seed sengaja **tidak** meninggalkan shift terbuka di Melati, jadi alur "Buka Toko" masih bisa langsung dicoba.
 
 ## Halaman Bantu
 

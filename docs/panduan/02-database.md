@@ -104,7 +104,7 @@ Perhatikan usernya `postgres.<ref>`, **bukan** `postgres`. Ini beda antara poole
 npm run seed
 ```
 
-Mengisi: 2 kedai, 1 owner, 3 karyawan, 10 produk F&B, 20 baris stok, 3 pengeluaran.
+Mengisi: 3 kedai (Melati, Kenanga, Gudang Pusat), 2 akun admin, 3 karyawan, 10 produk F&B, 5 bahan baku, 3 produksi, 11 pengeluaran, dan 14 hari transaksi tunai. Histori dan data "menunggu tindakan" sengaja disiapkan supaya dashboard, laporan, dan halaman Perhatian langsung berisi tanpa setup manual.
 
 Akun admin dev — keduanya masuk lewat `/admin/login`: **owner** `owner@kedaidev.test` / `dev-owner-2026`; **admin pusat** `admin@kedaidev.test` / `dev-admin-2026`.
 
@@ -114,7 +114,15 @@ Dua hal yang perlu diketahui:
 
 **Seed membuat user Supabase Auth lebih dulu**, baru mengisi tabel. Ini karena `admin_users.id` harus sama persis dengan id user di sistem Auth. Urutan itu tidak bisa dibalik.
 
-Produk "Pisang Goreng" sengaja distok hanya 3 supaya indikator "stok menipis" bisa langsung diuji tanpa perlu setup tambahan.
+Produk "Pisang Goreng" sengaja distok hanya 3 supaya indikator "stok menipis" bisa langsung diuji tanpa perlu setup tambahan. Melati sengaja dibiarkan tanpa shift terbuka hari ini, jadi alur "Buka Toko" masih bisa didemokan; Kenanga justru dibiarkan terbuka supaya ada satu pengajuan void yang menunggu keputusan.
+
+### Seed alternatif: `seed:minggu`
+
+```bash
+npm run seed:minggu
+```
+
+`supabase/seed-minggu.sql` menyimpan dataset yang lebih besar dan berbeda: kedai Nusantara, karyawannya sendiri, dan riwayat transaksi yang lebih panjang. Seed utama `seed.sql` yang dipakai demo klien karena id Melati/Kenanga/Rina/Budi/Sari-nya jadi acuan bersama untuk dokumentasi dan uji. Jangan campur keduanya dalam satu DB dev, karena seed terakhir yang dijalankan menimpa yang sebelumnya.
 
 ## Uji Database
 
@@ -137,6 +145,8 @@ npm run db -- supabase/tests/qris.sql           # pembayaran QRIS
 ```
 
 Beberapa uji memakai UUID id-id yang sama dengan `seed.sql` (kedai Melati/Kenanga, kasir Rina/Budi/Sari, produk contoh). Saat dev DB di-seed dengan `seed:minggu`, entitas itu tidak ada. Fixture bersama `supabase/tests/_fixtures.sql` dimuat otomatis oleh `scripts/db.mjs` pada baris `-- @include _fixtures.sql` di dalam masing-masing file — masih dalam transaksi yang sama, jadi ikut rollback. Idempoten (`ON CONFLICT DO NOTHING`), jadi juga aman terhadap DB yang sudah ber-seed penuh.
+
+Fixture itu juga menutup dulu shift yang masih terbuka di kedua kedai kanonik. Alasannya index `shifts_one_open_per_kedai` hanya mengizinkan satu shift open per kedai: tanpa penutup itu, setiap uji yang membuat shift open akan ditolak karena shift open milik seed — bukan karena logikanya sendiri. Uji jadi tidak bergantung pada isi DB saat dijalankan.
 
 > **Jangan jalankan test DB dengan psql langsung.** Penanda `-- @include _fixtures.sql` hanya diproses oleh `npm run db`. Pakai perintah di atas.
 

@@ -120,10 +120,14 @@ npm run db -- supabase/tests/shift.sql         # 13/13
 Uji manual:
 
 1. `/admin/karyawan` → tambah karyawan "Dewi" di Kedai Melati → cetak kartunya dari `/admin/karyawan/[id]`
-2. `/pos/masuk` → pindai kartu Dewi (fallback: ketik kode `DEV-QR-DEWI-0001` kalau seed-nya sama) → masuk POS
+2. `/pos/masuk` → pindai kartu Dewi (fallback: ketik kode yang tercetak di kartu itu) → masuk POS
 3. `/pos/absensi` → jam masuk → jam keluar → cek durasi muncul di riwayat
 4. `/pos/shift` → buka toko di Melati → coba absen lagi → beri tahu karyawan yang sama gabisa jam masuk dua kali
 5. `/admin/shift` → filter kedai & tanggal → pastikan shift `pending_sync` berbadge kuning dan tidak ikut total
+
+> Token QR karyawan **dibuat acak oleh sistem** saat karyawan ditambahkan, jadi kode kartunya bukan `DEV-QR-...` seperti pada seed dev. Yang ada awalan `DEV-QR-` hanya tiga karyawan seed: Rina, Budi, dan Sari. Kalau kartu Dewi tidak mau dipindai, periksa ulang kode yang tercetak di kartunya — bukan menebak pola kodenya.
+>
+> Langkah 4 memakai Melati karena seed dev sengaja **tidak** meninggalkan shift terbuka di Melati, jadi "Buka Toko" bisa langsung dicoba. Kenanga justru dibiarkan terbuka hari itu.
 
 ## Kalau Error
 

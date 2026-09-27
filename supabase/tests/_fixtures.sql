@@ -59,3 +59,22 @@ inserted as (
 insert into stock_movements (kedai_id, product_id, delta, balance_after, reason, note)
 select kedai_id, product_id, quantity, quantity, 'initial', 'Stok awal fixture uji'
 from inserted;
+
+-- Terakhir: normalisasi shift. Tutup dulu shift yang masih terbuka di kedua
+-- kedai kanonik. Index `shifts_one_open_per_kedai` hanya mengizinkan satu
+-- shift open per kedai, jadi tanpa baris ini setiap uji yang membuat shift
+-- open akan ditolak karena shift open milik seed, bukan karena logikanya
+-- sendiri. Uji jadi tidak bergantung pada isi DB saat dijalankan.
+--
+-- Aman: file ini hanya di-insert di DALAM transaksi uji, jadi seluruh
+-- perubahan ikut ROLLBACK bersama uji itu.
+update shifts
+   set status            = 'closed',
+       closed_at         = now(),
+       closed_by         = opened_by,
+       closing_cash      = coalesce(closing_cash, 0),
+       expected_cash     = coalesce(expected_cash, 0),
+       cash_difference   = coalesce(cash_difference, 0)
+ where kedai_id in ('11111111-1111-4111-8111-000000000001',   -- Melati
+                    '11111111-1111-4111-8111-000000000002')   -- Kenanga
+   and status = 'open';

@@ -142,7 +142,23 @@ Kalimat:
 > kasir. Kas belum dibereskan, transaksi yang belum terkirim, pengajuan yang
 > menunggu keputusan."
 
-Kalau masih kosong, katakan saja begitu. Jangan dipaksa isinya.
+Seed sudah menyiapkan isi halaman ini, jadi layar tidak kosong. Lonceng di menu
+menampilkan **4 notifikasi belum dibaca**:
+
+| Yang tampil | Keterangan |
+|---|---|
+| Pembatalan menunggu | Pengajuan void di Kenanga yang belum diputuskan |
+| Stok menipis | Pisang Goreng Melati dan Kentang Goreng Kenanga tinggal sedikit |
+| Ada selisih kas | Sesi Melati kemarin ditutup dengan selisih `-15.000`, statusnya masih **Terbuka** |
+| Antrian belum terkirim | Sesi Melati 4 hari lalu ditutup dengan 3 transaksi yang belum masuk |
+
+Dua bagian lain di halaman ini juga terisi: **Kas belum dibereskan** memuat
+satu sesi Melati (tombol **Buka Setoran** di situ), dan **Antrian belum
+terkirim** memuat sesi Melati 4 hari itu. Selisih Melati 3 hari lalu sengaja
+sudah berstatus **Sudah dijelaskan** supaya kelihatan bedanya: yang itu tidak
+masuk daftar.
+
+Kalau muncul item lain, itu kejadian nyata dari pemakaian, bukan data contoh.
 
 ---
 
@@ -262,6 +278,10 @@ Kedai Kenanga sebagai tujuan, isi jumlah, lalu **Ajukan**.
 
 Sekarang pindah ke laptop, buka `/admin/mutasi`. Pengajuan itu statusnya
 **Menunggu**. Setujui.
+
+Catatan: `/admin/mutasi` sudah punya satu pengajuan lama dari seed yang juga
+**Menunggu** (3 Matcha dari Melati ke Kenanga). Bedakan dari isi kolom alasan —
+setujui yang baru saja kamu buat.
 
 Kemudian buka `/admin/stok`: stok di Melati berkurang, stok di Kenanga
 bertambah.
@@ -392,6 +412,9 @@ instance klien.
 | Kasir Kedai Kenanga | `/pos/masuk` | `DEV-QR-SARI-0003` |
 
 Data contoh yang ada di seed: dua kedai (Melati, Kenanga) plus Gudang Pusat,
-sepuluh produk, tiga karyawan, bahan baku, produksi, dan pengeluaran.
+sepuluh produk, tiga karyawan, bahan baku, produksi, pengeluaran, dan riwayat
+transaksi tunai 14 hari supaya grafik dashboard langsung berisi. Melati
+sengaja belum punya shift terbuka hari ini, jadi sesi "Buka Toko" masih bisa
+didemokan.
 
 

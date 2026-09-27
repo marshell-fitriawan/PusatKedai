@@ -78,6 +78,8 @@ Sudah diuji 6 kasus lintas WIB/WITA/WIT; 3 di antaranya akan salah kalau memakai
 
 Grid 2 kolom di HP, dengan search dan filter kategori. Stok ditampilkan sebagai **informasi, bukan penghalang** — kasir tetap boleh menjual saat stok nol atau minus (lihat `docs/Database.md` §7).
 
+Grid jadi **1 kolom** kalau QRIS tidak aktif. Alasannya tombol **Bayar QRIS** diisi per lebar layar: dengan QRIS ada, tiap tombol jadi terlalu sempit untuk dibaca. Penentuannya `qrisAktif`, yaitu `MIDTRANS_AKTIF` yang dihitung server dari `MIDTRANS_SERVER_KEY` lalu diteruskan ke komponen — jadi status QRIS tidak pernah bocor ke bundle client. Lihat [12 QRIS](12-qris-pembayaran.md).
+
 Logika keranjang dipisah ke `lib/pos/cart.ts`, bukan di dalam komponen:
 
 ```ts
@@ -225,6 +227,12 @@ Uji manual di browser:
 2. `/pos/shift` → buka toko, kas awal 500000
 3. `/pos/kasir` → pilih produk, Bayar Tunai → muncul nomor transaksi
 4. `/pos/riwayat` → buka transaksinya → Batalkan → cek stok kembali
+
+Langkah 2 memakai Melati karena seed dev sengaja **tidak** meninggalkan shift
+terbuka di Melati — jadi "Buka Toko" selalu bisa langsung dicoba. Kalau kamu
+masuk sebagai kasir Kenanga (Sari, `DEV-QR-SARI-0003`), shift Kenanga sudah
+terbuka dari seed, jadi tombol "Buka Toko" akan ditolak. Tutup dulu lewat
+`/pos/shift` kalau mau mencobanya.
 
 Cek ledger:
 

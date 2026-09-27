@@ -72,7 +72,7 @@ Beberapa tombol memakai istilah yang mungkin asing. Artinya:
    - **Pakai kamera:** arahkan kamera ke kartu QR milik karyawan. Begitu
      terbaca, sesi langsung terbuka — tidak perlu menekan tombol apa pun.
    - **Ketik manual:** kalau kamera bermasalah, ketik kode di kartu (misalnya
-     `DEV-QR-AMINAH-0001`) di kolom **Kode kartu**, lalu tekan **Mulai Sesi**.
+      `DEV-QR-RINA-0001`) di kolom **Kode kartu**, lalu tekan **Mulai Sesi**.
 4. Setelah masuk, layar utama adalah **Kasir**, dan nama kedai serta nama
    karyawan tampil di bagian atas.
 
