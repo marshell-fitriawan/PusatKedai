@@ -1,0 +1,57 @@
+# Lisensi Proprietary
+
+Copyright (c) 2026 Marshell Devilito Fitriawan. Seluruh hak cipta dilindungi
+undang-undang.
+
+Perangkat lunak ini adalah karya berhak cipta. Tidak ada lisensi open source
+yang berlaku di repo ini, dan tidak ada permission yang diberikan kepada siapa
+pun di luar ketentuan pada berkas ini.
+
+## 1. Yang diberikan kepada klien
+
+Kepada pemilik lisensi (klien) diberikan izin terbatas dan tidak dapat
+dialihkan untuk:
+
+- menjalankan perangkat lunak ini pada satu deployment milik mereka sendiri;
+- menyesuaikan konfigurasi, data, harga, dan fitur pada instance tersebut
+  sesuai kebutuhan bisnis mereka;
+- memakai aplikasi yang sudah ter-deploy untuk operasional bisnis mereka.
+
+Izin ini tidak mencakup hak menyalin, menjual, menyewakan, atau mengalihkan
+perangkat lunak ini kepada pihak lain. Izin ini juga tidak mencakup hak
+menjalankan instance yang sama untuk melayani bisnis atau klien lain di luar
+instance yang sudah disepakati.
+
+## 2. Yang dilarang
+
+- Menyalin atau mendistribusikan kode ini di luar instance yang disepakati.
+- Menjalankan instance yang sama untuk melayani klien atau bisnis lain.
+- Menghapus, menutupi, atau mengubah pernyataan hak cipta dan lisensi ini.
+- Menjual kode atau jasanya sebagai produk, template, atau jasa pengembangan
+  untuk pihak ketiga tanpa izin tertulis.
+
+## 3. Berbagi kode untuk kebutuhan lain
+
+Kontribusi dari pihak lain hanya diterima melalui perjanjian tertulis yang
+memberikan pengelola hak cipta penuh atas kontribusi tersebut. Siapa pun yang
+tidak dapat memberikan hak itu tidak boleh diperlakukan sebagai kontributor,
+dan haknya atas kontribusi tersebut tetap miliknya.
+
+## 4. Tanpa jaminan
+
+Perangkat lunak ini disediakan apa adanya (as is), tanpa jaminan apa pun, baik
+tersurat maupun tidak langsung, termasuk jaminan kecocokan untuk keperluan
+tertentu. Pengelola tidak bertanggung jawab atas kerugian apa pun yang timbul
+dari penggunaan perangkat lunak ini.
+
+## 5. Komponen pihak ketiga
+
+Repo ini memakai paket pihak ketiga yang berlisensi terpisah (MIT, Apache-2.0,
+LGPL-3.0, dan lainnya, tercantum di `package-lock.json`). Ketentuan lisensi
+masing-masing paket tetap berlaku seperti aslinya, dan tidak diubah maupun
+digantikan oleh lisensi ini.
+
+## 6. Kontak
+
+Untuk permintaan lisensi, penggunaan di luar cakupan di atas, atau pertanyaan
+mengenai lisensi ini, hubungi Marshell Devilito Fitriawan.

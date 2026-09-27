@@ -149,6 +149,7 @@ Jalankan di **HP fisik**, bukan emulator — ini alur kerja harian mereka:
 ## 6. Serah terima
 
 - [ ] Serahkan kredensial owner lewat kanal aman (password manager, bukan WhatsApp)
+- [ ] Sertakan file `LICENSE` di paket serah terima, dan pastikan isinya konsisten dengan klausul hak pakai di perjanjian
 - [ ] Cetak kartu QR karyawan
 - [ ] Pelatihan singkat: buka toko → transaksi → tutup toko (30 menit cukup)
 - [ ] Jelaskan apa yang terjadi saat internet mati — ini pertanyaan pertama mereka nanti
@@ -159,6 +160,8 @@ Jalankan di **HP fisik**, bukan emulator — ini alur kerja harian mereka:
 **Kasir tetap bisa jualan tunai saat internet mati.** Transaksi masuk antrian di HP dan terkirim otomatis begitu online. Yang tidak bisa saat offline: pembayaran QRIS (butuh Midtrans), approval mutasi stok, dan laporan pusat.
 
 **Jangan uninstall aplikasi dari home screen saat masih ada badge "belum sync"** — antriannya ada di penyimpanan browser HP itu. Ini satu-satunya cara data transaksi bisa benar-benar hilang.
+
+**Hak pakai kode, bukan kepemilikan.** Klien mendapat izin menjalankan dan menyesuaikan instance ini untuk bisnis mereka sendiri. Mereka tidak boleh menyalin kodenya, menjalankannya untuk bisnis lain, atau menjualnya kembali sebagai produk. Batas itu tertulis di file `LICENSE` dan harus sama dengan klausul di perjanjian. Kalau klien minta akses kode, jawab dengan klausul lisensi, bukan dengan membuka repo.
 
 ---
 
