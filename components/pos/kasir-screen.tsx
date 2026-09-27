@@ -65,6 +65,7 @@ type HasilTransaksi = {
 function IsiKeranjang({
   hasil,
   qris,
+  qrisAktif,
   qrImage,
   keranjang,
   metode,
@@ -76,6 +77,7 @@ function IsiKeranjang({
 }: {
   hasil: HasilTransaksi | null;
   qris: QrisAktif | null;
+  qrisAktif: boolean;
   qrImage: string | null;
   keranjang: ItemKeranjang[];
   metode: "tunai" | "qris";
@@ -160,8 +162,16 @@ function IsiKeranjang({
       ) : (
         <>
           {/* Pilihan metode pembayaran. Tunai = offline-first, QRIS =
-              online-only (M1-10). */}
-          <div className="mb-4 grid grid-cols-2 gap-2" role="radiogroup" aria-label="Metode pembayaran">
+              online-only (M1-10). QRIS hanya ditampilkan kalau instance-nya
+              punya MIDTRANS_SERVER_KEY — lihat qrisAktif. */}
+          <div
+            className={cn(
+              "mb-4 grid gap-2",
+              qrisAktif ? "grid-cols-2" : "grid-cols-1",
+            )}
+            role="radiogroup"
+            aria-label="Metode pembayaran"
+          >
             <button
               type="button"
               role="radio"
@@ -182,25 +192,27 @@ function IsiKeranjang({
               Tunai
             </button>
 
-            <button
-              type="button"
-              role="radio"
-              aria-checked={metode === "qris"}
-              onClick={() => {
-                setMetode("qris");
-                setErrorBayar(null);
-              }}
-              className={cn(
-                "flex h-11 items-center justify-center gap-2 border-2 border-ink font-display text-sm font-bold uppercase tracking-tight",
-                "shadow-brutal-sm press-brutal",
-                metode === "qris"
-                  ? "bg-primary text-ink"
-                  : "bg-surface text-ink hover:bg-primary-light",
-              )}
-            >
-              <QrCode className="size-4" aria-hidden />
-              QRIS
-            </button>
+            {qrisAktif ? (
+              <button
+                type="button"
+                role="radio"
+                aria-checked={metode === "qris"}
+                onClick={() => {
+                  setMetode("qris");
+                  setErrorBayar(null);
+                }}
+                className={cn(
+                  "flex h-11 items-center justify-center gap-2 border-2 border-ink font-display text-sm font-bold uppercase tracking-tight",
+                  "shadow-brutal-sm press-brutal",
+                  metode === "qris"
+                    ? "bg-primary text-ink"
+                    : "bg-surface text-ink hover:bg-primary-light",
+                )}
+              >
+                <QrCode className="size-4" aria-hidden />
+                QRIS
+              </button>
+            ) : null}
           </div>
 
           <ul className="flex flex-col divide-y divide-ink">
@@ -351,12 +363,18 @@ export function KasirScreen({
   ambangStokMenipis,
   kedaiId,
   shiftId,
+  qrisAktif,
 }: {
   produk: ProdukKasir[];
   ambangStokMenipis: number;
   kedaiId: string;
   /** null = toko belum dibuka, penjualan tidak bisa dicatat. */
   shiftId: string | null;
+  /**
+   * false = instance ini tidak punya MIDTRANS_SERVER_KEY, jadi QRIS
+   * disembunyikan sepenuhnya dan kasir hanya bisa bayar tunai.
+   */
+  qrisAktif: boolean;
 }) {
   const router = useRouter();
   const [keranjang, dispatch] = useReducer(reducerKeranjang, []);
@@ -802,6 +820,7 @@ export function KasirScreen({
           <IsiKeranjang
             hasil={hasil}
             qris={qris}
+            qrisAktif={qrisAktif}
             qrImage={qrImage}
             keranjang={keranjang}
             metode={metode}
@@ -884,6 +903,7 @@ export function KasirScreen({
         <IsiKeranjang
           hasil={hasil}
           qris={qris}
+          qrisAktif={qrisAktif}
           qrImage={qrImage}
           keranjang={keranjang}
           metode={metode}

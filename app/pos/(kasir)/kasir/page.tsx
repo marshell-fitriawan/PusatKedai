@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { KasirScreen } from "@/components/pos/kasir-screen";
+import { MIDTRANS_AKTIF } from "@/lib/payment/midtrans";
 import { getPosSession } from "@/lib/pos/session";
 import { getOpenShift } from "@/lib/pos/shift";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -70,6 +71,7 @@ export default async function KasirPage() {
       ambangStokMenipis={kedaiRes.data?.low_stock_threshold ?? 5}
       kedaiId={session.kedaiId}
       shiftId={shift?.id ?? null}
+      qrisAktif={MIDTRANS_AKTIF}
     />
   );
 }
